@@ -38,9 +38,20 @@ public class Rocket {
 		this.thrusterList = thrusterList;
 	}
 	
+//	Accelerate or Decelerate
+	public void PowerToTarget(int targetPower) {
+		for(Thruster thruster: thrusterList)
+		{
+			thruster.setTargetPower(targetPower);
+			Thread t = new Thread(thruster);
+			t.start();
+		}
+	}
+	
+	
 	@Override
 	public String toString() {
-		return "Rocket [Code=" + Code + ", thrusterList=" + thrusterList + "]";
+		return "Rocket [Code=" + Code + ", thrusterList=\n" + thrusterList + "]";
 	}
 
 	

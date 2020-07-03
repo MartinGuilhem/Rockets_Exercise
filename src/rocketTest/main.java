@@ -22,6 +22,10 @@ public class main {
 		
 		System.out.println(rocket1);
 		System.out.println(rocket2);
+		
+		
+		rocket1.PowerToTarget(35);
+		rocket2.PowerToTarget(10);
 
 	}
 

@@ -8,6 +8,7 @@ public class Thruster implements Runnable {
 	private int maxPower;
 	private int currentPower;
 	private int targetPower;
+	private boolean maxPowerAlert=false;
 		
 //	constructor
 	public Thruster(int maxPower) {
@@ -42,7 +43,13 @@ public class Thruster implements Runnable {
 	}
 
 	public void setTargetPower(int targetPower) {
+		if(targetPower>maxPower)
+		{
+			this.targetPower = maxPower;
+			maxPowerAlert=true;
+		}else {
 		this.targetPower = targetPower;
+		}
 	}
 	
 	
@@ -63,7 +70,13 @@ public class Thruster implements Runnable {
 					System.out.println("Thruster "+ThrusterID+" || Current Power: "+currentPower+ " || Target power "+targetPower);
 					Thread.sleep(300);
 				}while(currentPower!=targetPower);
+				
+				if(maxPowerAlert) {
+					System.out.println("ALERT: Thruster: "+ThrusterID+" Reached the MAX Power ("+maxPower+")");
+				}
+				else {
 				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+targetPower+")");
+				}
 			}
 			else if(currentPower>targetPower) {
 				do {

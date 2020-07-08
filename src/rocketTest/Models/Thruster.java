@@ -1,17 +1,19 @@
 package rocketTest.Models;
 
+import java.util.ArrayList;
+
 public class Thruster implements Runnable {
 	
 //	atributos
 	private static int CONT=1;
 	private int ThrusterID;
-	private int maxPower;
-	private int currentPower;
-	private int targetPower;
+	private double maxPower;
+	private double currentPower;
+	private double targetPower;
 	private boolean maxPowerAlert=false;
 		
 //	constructor
-	public Thruster(int maxPower) {
+	public Thruster(double maxPower) {
 		this.ThrusterID= CONT;
 		CONT++;
 		this.maxPower=maxPower;
@@ -22,27 +24,27 @@ public class Thruster implements Runnable {
 
 	
 //	GETTERS y SETTERS
-	public int getMaxPower() {
+	public double getMaxPower() {
 		return maxPower;
 	}
 
-	public void setMaxPower(int maxPower) {
+	public void setMaxPower(double maxPower) {
 		this.maxPower = maxPower;
 	}
 	
-	public int getCurrentPower() {
+	public double getCurrentPower() {
 		return currentPower;
 	}
 
-	public void setCurrentPower(int currentPower) {
+	public void setCurrentPower(double currentPower) {
 		this.currentPower = currentPower;
 	}
 	
-	public int getTargetPower() {
+	public double getTargetPower() {
 		return targetPower;
 	}
 
-	public void setTargetPower(int targetPower) {
+	public void setTargetPower(double targetPower) {
 		if(targetPower>maxPower)
 		{
 			this.targetPower = maxPower;
@@ -55,11 +57,35 @@ public class Thruster implements Runnable {
 	
 	@Override
 	public String toString() {
-		return "Thruster [ID:"+ThrusterID+", maxPower=" + maxPower + ", currentPower=" + 
-				currentPower + ", targetPower=" + targetPower + "]\n";
+		return "Thruster [ID:"+ThrusterID+", maxPower=" + String.format("%.2f", maxPower) + ", currentPower=" + 
+				String.format("%.2f", currentPower) + ", targetPower=" + String.format("%.2f", targetPower) + "]\n";
 	}
 	
 	
+	//funcion 
+	public static double powerDistribute(ArrayList<Double> listMaxPowerThrusters, double targetPowerVel) 
+	{		
+		double distribution = targetPowerVel / listMaxPowerThrusters.size();
+		double lack = 0.00; //potencia que no entra en thruster
+		double result;
+		ArrayList<Double> torrentesRestantes = new ArrayList<Double>();
+		
+		for(int i=0; i<listMaxPowerThrusters.size(); i++) 
+		{
+			result=listMaxPowerThrusters.get(i)-distribution; // t1MaxPower - reparticion
+			if(result<=0.00) { //hay sobrante sin poder meter en el thruster
+				lack=lack-result;	//el resultado habia dado negativo para entrar, por lo que sobra incrementa
+			}else {
+				torrentesRestantes.add(result);					}
+			}
+			if(lack>0.00) {
+				return powerDistribute(torrentesRestantes, lack)+distribution;
+				}else {
+				return distribution;
+			}
+	}
+		
+
 	@Override
 	public void run() {
 		
@@ -67,7 +93,7 @@ public class Thruster implements Runnable {
 			if(currentPower<targetPower) {
 				do {
 					currentPower++;
-					System.out.println("Thruster "+ThrusterID+" || Current Power: "+currentPower+ " || Target power "+targetPower);
+					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)+ " || Target power "+String.format("%.2f", targetPower));
 					Thread.sleep(300);
 				}while(currentPower!=targetPower);
 				
@@ -75,16 +101,16 @@ public class Thruster implements Runnable {
 					System.out.println("ALERT: Thruster: "+ThrusterID+" Reached the MAX Power ("+maxPower+")");
 				}
 				else {
-				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+targetPower+")");
+				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
 				}
 			}
 			else if(currentPower>targetPower) {
 				do {
 					currentPower--;
-					System.out.println("Thruster "+ThrusterID+" || Current Power: "+currentPower+ " || Target power "+targetPower);
+					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)+ " || Target power "+String.format("%.2f", targetPower));
 					Thread.sleep(300);
 				}while(currentPower!=targetPower);
-				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+targetPower+")");
+				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
 			}
 			else {
 				System.out.println("The Truster is already at the required power.");

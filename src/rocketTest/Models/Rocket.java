@@ -38,8 +38,18 @@ public class Rocket {
 		this.thrusterList = thrusterList;
 	}
 	
+	public static double sumOfPowers(Rocket rocket) {
+		double sum=0;
+				
+		for(int i=0; i<rocket.getThrusterList().size(); i++) {
+			sum=sum+rocket.getThrusterList().get(i).getMaxPower();
+		}
+		return sum;
+	}
+	
+	
 //	Accelerate or Decelerate
-	public void PowerToTarget(int targetPower) {
+	public void PowerToTarget(double targetPower) {
 		for(Thruster thruster: thrusterList)
 		{
 			thruster.setTargetPower(targetPower);

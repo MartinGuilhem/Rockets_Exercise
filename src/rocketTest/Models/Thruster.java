@@ -58,7 +58,7 @@ public class Thruster implements Runnable {
 //	###
 //	Setea el Target Power al thruster, pero si el target es mayor al maximo admisible setea el maximo admisible
 	public void setTargetPower(double targetPower) {
-		if(targetPower>maxPower)
+		if(targetPower>=maxPower)
 		{
 			this.targetPower = maxPower;
 			maxPowerAlert=true;

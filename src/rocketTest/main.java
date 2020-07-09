@@ -86,7 +86,8 @@ public class main {
 				
 //				Funcion powerDistribute: devuelve la potencia que debo aplicarle a cada thruster y 
 //				   que cada uno limitando segun su maximo la suma dara la potencia todal requerida  
-				distribution=Thruster.powerDistribute(listMaxPowerThrusters, targetPowerVel);				
+				distribution=Thruster.powerDistribute(listMaxPowerThrusters, targetPowerVel);
+				distribution=(int)distribution;
 
 				System.out.println("#########\nLa total Distribucion es: "+String.format("%.2f", distribution)+"\n\n");		
 
@@ -107,6 +108,7 @@ public class main {
 				distribution=Thruster.powerDistribute(listMaxPowerThrusters, targetPowerVel);
 				System.out.println("#########\nThe resulting power distribution is: "+String.format("%.2f", distribution)+"\n\n");		
 
+				distribution=(int)distribution;
 				
 				rocket1.PowerToTarget(distribution);
 				rocket2.PowerToTarget(distribution);

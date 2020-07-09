@@ -23,7 +23,8 @@ public class Thruster implements Runnable {
 	}
 
 	
-//	GETTERS y SETTERS
+//	### GETTERS, SETTERS y TO STRING ###
+	
 	public double getMaxPower() {
 		return maxPower;
 	}
@@ -44,6 +45,18 @@ public class Thruster implements Runnable {
 		return targetPower;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "Thruster [ID:"+ThrusterID+", maxPower=" + String.format("%.2f", maxPower) + ", currentPower=" + 
+				String.format("%.2f", currentPower) + ", targetPower=" + String.format("%.2f", targetPower) + "]\n";
+	}
+	
+	
+	
+	
+//	###
+//	Setea el Target Power al thruster, pero si el target es mayor al maximo admisible setea el maximo admisible
 	public void setTargetPower(double targetPower) {
 		if(targetPower>maxPower)
 		{
@@ -55,14 +68,11 @@ public class Thruster implements Runnable {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "Thruster [ID:"+ThrusterID+", maxPower=" + String.format("%.2f", maxPower) + ", currentPower=" + 
-				String.format("%.2f", currentPower) + ", targetPower=" + String.format("%.2f", targetPower) + "]\n";
-	}
 	
 	
-	//funcion 
+//	###
+//	 Da como resultado la potencia a aplicarle a cada thruster. Luego cada thruster se limitará 
+//	    a su maxPower, pero la sumatoria de todos las potencias aplicadas alcanzaran la potencia objetivo 
 	public static double powerDistribute(ArrayList<Double> listMaxPowerThrusters, double targetPowerVel) 
 	{		
 		double distribution = targetPowerVel / listMaxPowerThrusters.size();
@@ -86,37 +96,57 @@ public class Thruster implements Runnable {
 	}
 		
 
+	
+//	###
+	
 	@Override
 	public void run() {
 		
 		try {
-			if(currentPower<targetPower) {
+			
+			if(currentPower<targetPower) 
+			{
 				do {
 					currentPower++;
-					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)+ " || Target power "+String.format("%.2f", targetPower));
+					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)
+										+ " || Target power "+String.format("%.2f", targetPower));
+					
 					Thread.sleep(300);
 				}while(currentPower!=targetPower);
 				
-				if(maxPowerAlert) {
+				if(maxPowerAlert) 
+				{
 					System.out.println("ALERT: Thruster: "+ThrusterID+" Reached the MAX Power ("+maxPower+")");
 				}
-				else {
-				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
+				
+				else 
+				{
+					System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
 				}
 			}
-			else if(currentPower>targetPower) {
+	
+			else if(currentPower>targetPower) 
+			{
+				
 				do {
 					currentPower--;
 					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)+ " || Target power "+String.format("%.2f", targetPower));
 					Thread.sleep(300);
 				}while(currentPower!=targetPower);
+			
+				
 				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
 			}
-			else {
+			
+			else 
+			{
 				System.out.println("The Truster is already at the required power.");
 			}
+			
 			Thread.sleep(1000);
-		}catch(InterruptedException e) {
+		}
+		catch(InterruptedException e) 
+		{
 			e.printStackTrace();
 		}
 		

@@ -39,15 +39,17 @@ public class main {
 		System.out.println(rocket2);
 		
 		
-	
-//		System.out.println("\n\n INSERT Current SPEED: ");
-//		cSpeed=Double.parseDouble(sc.nextLine());
-//		
-//		System.out.println("\n\n INSERT Target SPEED: ");
-//		tSpeed=Double.parseDouble(sc.nextLine());
-//		
-//		
-//		targetPowerVel=Math.pow(((tSpeed-cSpeed)/100), 2);
+/*	Ecuacion para hallar targetPower con la velocidad final y actual como parametros
+  
+		System.out.println("\n\n INSERT Current SPEED: ");
+		cSpeed=Double.parseDouble(sc.nextLine());
+		
+		System.out.println("\n\n INSERT Target SPEED: ");
+		tSpeed=Double.parseDouble(sc.nextLine());
+		
+		targetPowerVel=Math.pow(((tSpeed-cSpeed)/100), 2);
+*/		
+		
 		
 		targetPowerVel=100.00;
 		
@@ -103,7 +105,7 @@ public class main {
 				}
 				
 				distribution=Thruster.powerDistribute(listMaxPowerThrusters, targetPowerVel);
-				System.out.println("#########\nLa total Distribucion es: "+String.format("%.2f", distribution)+"\n\n");		
+				System.out.println("#########\nThe resulting power distribution is: "+String.format("%.2f", distribution)+"\n\n");		
 
 				
 				rocket1.PowerToTarget(distribution);

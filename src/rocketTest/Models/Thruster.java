@@ -112,7 +112,7 @@ public class Thruster implements Runnable {
 										+ " || Target power "+String.format("%.2f", targetPower));
 					
 					Thread.sleep(300);
-				}while(currentPower!=targetPower);
+				}while(currentPower<targetPower);
 				
 				if(maxPowerAlert) 
 				{
@@ -132,7 +132,7 @@ public class Thruster implements Runnable {
 					currentPower--;
 					System.out.println("Thruster "+ThrusterID+" || Current Power: "+String.format("%.2f", currentPower)+ " || Target power "+String.format("%.2f", targetPower));
 					Thread.sleep(300);
-				}while(currentPower!=targetPower);
+				}while(currentPower>=targetPower);
 			
 				
 				System.out.println("\n The Thruster: "+ThrusterID+" Reached the Target Power: ("+String.format("%.2f", targetPower)+")");
